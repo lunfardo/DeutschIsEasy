@@ -1,0 +1,47 @@
+.container{
+    background: #232222;
+    margin: 0px !important;
+    width:  100vw !important;
+    height: 100vh;
+    padding: 0px; 
+    margin:0px !important;
+    color:white;
+    overflow: auto;
+    padding-left: 0px !important;
+}
+#wordToSearch{
+    color:grey;
+    font-size: 26px;
+    height: 53px;
+}
+#myInfo{
+    margin-left: 15px;
+}
+
+.headword_full{
+    border-bottom: 1px solid #821313;
+}
+
+.arab-header{
+    color: cornflowerblue;
+    font-weight: bold;
+}
+
+.translation-container{
+    border-bottom: 1px solid rgba(59, 48, 66, 0.46);
+}
+
+::-webkit-scrollbar {     
+    width: 5px;/* Para la barra vertical*/
+    background-color: rgb(207, 112, 199);
+    height: 3px; /* Para la barra horizontal*/
+}
+
+::-webkit-scrollbar-thumb:window-inactive,
+::-webkit-scrollbar-thumb {
+        background:  black;
+}
+
+:vertical  {
+    width: 4px !important; 
+}

@@ -1,0 +1,3 @@
+npm install electron-packager -g
+//un directory arriba
+electron-packager deutsche_is_easy DeutscheIsEasy --platform=win32 --arch=x64

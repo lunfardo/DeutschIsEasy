@@ -2,17 +2,36 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Hello World Now!</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-    We are using Node.js <script>document.write(process.versions.node)</script>,
-    Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
 
+    
+    <div class="container">
+        <div class="top-section row">
+          <div class="col-4">
+            <input type="text" id="wordToSearch"/>
+          </div>  
+          <div id="searched_word_list"class="scrollmenu col-8">
+
+          </div>
+        </div>
+        <div id="myInfo">
+            
+        </div>
+
+
+    </div>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/app.css">
+    <link rel="stylesheet" href="./assets/css/topbar.css">
+    <link rel="stylesheet" href="./assets/bootstrap40/bootstrap.min.css">
     <script>
-      // You can also require other files to run in this process
+      require('./assets/bootstrap40/bootstrap.min.js')
+    </script>    
+    <script>
+      // You can also require other files to run in this process     
       require('./renderer.js')
     </script>
   </body>
