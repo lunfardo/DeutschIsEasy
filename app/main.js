@@ -1,5 +1,5 @@
-const APIKey="c9b810fa6a37e82c287d66f64dde4c7d3258a3230b435b4cf91a7aef7b4e9853"
-
+const APIKey=window.appconfig.PONS_APIKEY
+const {ipcRenderer} = require('electron')
 
 function parseAPIData(languagesDataContainer){
     //los .join(" ") son para que no aparezca comas :D
@@ -45,6 +45,7 @@ module.exports = class MyApp {
               this.fetchTranslation(e.target.innerHTML,false)
             }
         });           
+        this.fs = require('fs');
     }
   
     run(){
@@ -67,6 +68,7 @@ module.exports = class MyApp {
 
     pushWord(word){
         this.lastSearches.unshift(word)
+        ipcRenderer.sendSync("write-word-on-history",word)     
     }
 
     updateTopBarWords(){
