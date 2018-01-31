@@ -1,4 +1,4 @@
-const APIKey=""
+const APIKey="c9b810fa6a37e82c287d66f64dde4c7d3258a3230b435b4cf91a7aef7b4e9853"
 
 
 function parseAPIData(languagesDataContainer){
@@ -31,7 +31,7 @@ function parseAPIData(languagesDataContainer){
                                 .toString()//.replace(/,/g, '')
 }
 module.exports = class MyApp {
-    constructor(width) {
+    constructor() {
         this.lastSearches=[]
         this.APIHeaders = new Headers()
         this.APIHeaders.append("X-Secret", APIKey)
@@ -53,11 +53,14 @@ module.exports = class MyApp {
     
     fetchTranslation(word,shouldRegister){
         var myRequest = new Request(`https://api.pons.com/v1/dictionary?l=deen&q=${word}`, this.fetchPreset);
-        if(shouldRegister)this.pushWord(word)
+        
         fetch(myRequest).then((response)=> {
             response.text().then((data)=>{
                 document.getElementById("myInfo").innerHTML=parseAPIData(JSON.parse(data))
-                this.updateTopBarWords()
+                if(response.status===200 && shouldRegister){
+                    this.pushWord(word)
+                    this.updateTopBarWords()
+                }
             })
         })
     }

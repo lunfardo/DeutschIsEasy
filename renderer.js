@@ -2,10 +2,10 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-const MyApp=require('./app/main.js')
 
 
-
+const MyApp=require('./app/main')
+const DB=require('./app/db')
 myApp=new MyApp
 myApp.run()
 //myApp.fetchSomething()
