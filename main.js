@@ -7,6 +7,9 @@ const BrowserWindow = electron.BrowserWindow
 const path = require('path')
 const url = require('url')
 
+const fs=require('fs')
+const {ipcMain} = require('electron')
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
@@ -19,15 +22,16 @@ function createWindow () {
     frame:true,
    // backgroundColor: 'black'
   })
-
+ 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
-    slashes: true
+    slashes: true,
+    frame:false
   }))
 
-  mainWindow.setResizable(false)
+ // mainWindow.setResizable(false)
   // Open the DevTools.
    //mainWindow.webContents.openDevTools()
 
@@ -67,6 +71,12 @@ app.on('activate', function () {
 // code. You can also put them in separate files and require them here.
 
 
-
+ipcMain.on('write-word-on-history', (event, arg) => {
+  fs.appendFile("word_history.txt", arg+'\n',(err)=> {
+    if (err) throw err;
+    console.log('Saved!');
+  })
+  event.returnValue = null
+})
 
 

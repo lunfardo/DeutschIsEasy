@@ -1,5 +1,5 @@
-const APIKey=""
-
+const APIKey=window.appconfig.PONS_APIKEY
+const {ipcRenderer} = require('electron')
 
 function parseAPIData(languagesDataContainer){
     //los .join(" ") son para que no aparezca comas :D
@@ -45,6 +45,7 @@ module.exports = class MyApp {
               this.fetchTranslation(e.target.innerHTML,false)
             }
         });           
+        this.fs = require('fs');
     }
   
     run(){
@@ -53,17 +54,19 @@ module.exports = class MyApp {
     
     fetchTranslation(word,shouldRegister){
         var myRequest = new Request(`https://api.pons.com/v1/dictionary?l=deen&q=${word}`, this.fetchPreset);
-        if(shouldRegister)this.pushWord(word)
         fetch(myRequest).then((response)=> {
             response.text().then((data)=>{
                 document.getElementById("myInfo").innerHTML=parseAPIData(JSON.parse(data))
                 this.updateTopBarWords()
+            }).then(()=>{
+                if(shouldRegister)this.pushWord(word)
             })
         })
     }
 
     pushWord(word){
         this.lastSearches.unshift(word)
+        ipcRenderer.sendSync("write-word-on-history",word)     
     }
 
     updateTopBarWords(){
