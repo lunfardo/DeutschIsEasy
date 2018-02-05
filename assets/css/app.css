@@ -14,7 +14,7 @@
     font-size: 26px;
     height: 53px;
 }
-#myInfo{
+#translation_wrapper{
     margin-left: 15px;
 }
 
@@ -44,4 +44,8 @@
 
 :vertical  {
     width: 4px !important; 
+}
+
+.roms-container{
+    width:100%;
 }

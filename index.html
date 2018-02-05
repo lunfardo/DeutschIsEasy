@@ -2,7 +2,11 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Deustche APP</title>
+    <title>My Deustche APP</title>    
+    <link rel="stylesheet" href="./assets/css/app.css">
+    <link rel="stylesheet" href="./assets/css/topbar.css">
+    <link rel="stylesheet" href="./assets/vendor/bootstrap40/css/bootstrap.min.css">
+
   </head>
   <body>
 
@@ -16,23 +20,11 @@
 
           </div>
         </div>
-        <div id="myInfo">
-            
+        <div id="translation_wrapper">     
         </div>
-
-
-    </div>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="./assets/css/app.css">
-    <link rel="stylesheet" href="./assets/css/topbar.css">
-    <link rel="stylesheet" href="./assets/bootstrap40/bootstrap.min.css">
-    <script>
-      require('./assets/bootstrap40/bootstrap.min.js')
-    </script>    
+    </div> 
     <script>
       // You can also require other files to run in this process     
-      require('./app_config.js')
       require('./renderer.js')
     </script>
   </body>
