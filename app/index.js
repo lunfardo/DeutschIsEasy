@@ -2,54 +2,41 @@
 const {ipcMain} = require('electron')
 const WordList=   require('./WordList') 
 const TranslateService=require('./translate_service/index')
+const {SearchCapsule,WordCapsule}=require('../static/structures')
 
 module.exports = class DeutschDictApp {
     constructor() {
-        this.lastSearches=[]
         this.config=require('dotenv').config().parsed              
-        this.fs = require('fs');
-        
     }
-
+    /*
+    this function register the handlers from whichs the renderer will make the ipc calls
+    */
     registerAsyncMessagesHandlers(){
+        //here is the endpoint where the searchs to 3er party services is done
         ipcMain.on('search-word', (event, arg) => {
-            let capsulatedSearch=JSON.parse(arg)
+            /*this type cast is not actually necesary, just do it for clarification sake */
+            let capsulatedSearch=new SearchCapsule(JSON.parse(arg))
+            //TranslateService inv multiplex between many translate services apis
             TranslateService.translateIMUX(capsulatedSearch).then((translateResultJSON)=>{
+                let wordCapsulated= new WordCapsule({word:capsulatedSearch.word.toUpperCase()})
+                WordList.loadFromFile().then(()=>{
+                    //we lazy check that the request has not failed,and the word is not already present in the list
+                    if((!TranslateService.hasFailedIMUX())&&(!WordList.findWord(wordCapsulated.word))){
+                        WordList.insertWord(wordCapsulated)
+                    }
+                    WordList.writeToFile()
+                })
                 event.sender.send('search-word-reply', translateResultJSON)             
             })
+        })  
+        
+        ipcMain.on('last-searches', (event, arg) => {
+            WordList.loadFromFile().then(()=>{
+                event.sender.send('last-searches-reply', JSON.stringify(WordList.lastSearches())) 
+            })                                        
         })            
     }
 
 
   };
 
-
-  
-  /*
-
-    fetchTranslation(word,shouldRegister){
-        var myRequest = new Request(`https://api.pons.com/v1/dictionary?l=deen&q=${word}`, this.fetchPreset);
-        
-        fetch(myRequest).then((response)=> {
-            response.text().then((data)=>{
-                document.getElementById("myInfo").innerHTML=parseAPIData(JSON.parse(data))
-                if(response.status===200 && shouldRegister){
-                    this.pushWord(word)
-                    this.updateTopBarWords()
-                }
-            })
-        })
-    }
-
-    pushWord(word){
-        this.lastSearches.unshift(word)
-        ipcRenderer.sendSync("write-word-on-history",word)     
-    }
-
-    updateTopBarWords(){
-        let listWordSeached= this.lastSearches.map((word)=>{return `<a class="word-searched-item">${word}</a>`}).join("")
-
-        document.getElementById("searched_word_list").innerHTML=listWordSeached
-    }
-
-  */

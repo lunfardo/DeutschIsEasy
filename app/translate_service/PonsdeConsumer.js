@@ -6,6 +6,7 @@ function PonsdeConsumer(apikey){
     this.rawData=""
     this.endpointURL="https://api.pons.com/v1/dictionary"
    // this.APIHeaders.append("X-Secret", config.PONS_APIKEY)
+    this.lastSearchFailed=false
     this.fetchPreset = {
                         method: 'GET',
                         headers: {
@@ -24,6 +25,14 @@ function PonsdeConsumer(apikey){
     this.translate=(wordToSearch)=>{
         return new Promise((resolve, reject)=>{
             this.makeEndpointRequest(wordToSearch).then((result)=>{
+                //this means result is empty
+                if(result.status===204){
+                    this.lastSearchFailed=true
+                    return true //we finish the execution here
+                }else{
+                    this.lastSearchFailed=false
+                }
+
                 result.text().then((resultText)=>{   
                     resolve(this.parseDataFromAPI(JSON.parse(resultText)))             
                 })
@@ -60,6 +69,10 @@ function PonsdeConsumer(apikey){
                                     [0].hits.map(parseHit).join(" ")
                                     .toString()//.replace(/,/g, '')
     }
+
+    this.didLastSearchFailed=()=>{
+        return this.lastSearchFailed
+    }    
 
 }
 

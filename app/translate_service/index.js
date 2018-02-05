@@ -3,27 +3,35 @@ const PonsdeConsumer=require('./PonsdeConsumer')
 const GlosbeConsumer=require('./GlosbeConsumer')
 
 function TranslateService(){
-}
-
-TranslateService.prototype.translateIMUX=(capsulatedSearch)=>{
   this.provider=null
-  switch (capsulatedSearch.provider) {
-    case CONST.PROVIDERS.PONS_DE:
-      return PonsdeConsumer.translate(capsulatedSearch.word)
-      break;
 
-    case CONST.PROVIDERS.GLOSBE:
-      return GlosbeConsumer.translate(capsulatedSearch.word)
-      break;    
-    //TODO
-    case CONST.PROVIDERS.GOOGLE:
-      return GoogleTranslateConsumer.translate(capsulatedSearch.word)
-    default:
-      break;
+  this.translateIMUX=(capsulatedSearch)=>{
+    this.getConsumer(capsulatedSearch.provider)
+    return this.provider.translate(capsulatedSearch.word)
+  }
+
+  this.hasFailedIMUX=(providerIdentifier)=>{
+    this.getConsumer(providerIdentifier)
+    return this.provider.didLastSearchFailed()
+  }
+
+  this.getConsumer=(providerIdentifier)=>{
+    switch (providerIdentifier) {
+      case CONST.PROVIDERS.PONS_DE:
+        this.provider=PonsdeConsumer
+        break;
+      case CONST.PROVIDERS.GLOSBE:
+        this.provider=GlosbeConsumer
+        break;    
+      //TODO: Google Api handler
+      case CONST.PROVIDERS.GOOGLE:
+        this.provider=GoogleTranslateConsumer
+      
+      default:
+        break;
+    }    
   }
 }
 
 const instance=new TranslateService
 module.exports=instance
-
-

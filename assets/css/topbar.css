@@ -11,6 +11,7 @@
     text-align: center;
     padding: 14px;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .scrollmenu a:hover {

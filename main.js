@@ -15,7 +15,6 @@ global.config=require('dotenv').config().parsed
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-console.log("gi")
 function createWindow () {
   // Create the browser window.
 

@@ -49,3 +49,17 @@
 .roms-container{
     width:100%;
 }
+
+#providers_container{
+    float: right;
+    cursor: pointer;
+    margin:0px;
+    padding: 0px;
+}
+.provider-item{
+    background: #3b4567;
+    border: 1px solid black;
+}
+.provider-item:hover{
+    background:#13245a;
+}
